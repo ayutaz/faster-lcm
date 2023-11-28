@@ -15,8 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         git \
         python3-dev \
         python3-pip \
-        libglib2.0-0
-    && apt clean && rm -rf /var/lib/apt/lists/* \
+        libglib2.0-0 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && ln -s /usr/bin/python3 /usr/bin/python
 
 RUN echo "export PATH=/usr/local/cuda/bin:$PATH" >> /etc/bash.bashrc \
@@ -29,9 +29,11 @@ RUN pip3 install \
         xformers \
         triton \
         --index-url https://download.pytorch.org/whl/cu118
-    && pip3 install \
+
+RUN pip3 install \
         diffusers \
         transformers \
         accelerate
+
 
 WORKDIR /app
